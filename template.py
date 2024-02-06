@@ -33,10 +33,11 @@ for filepath in files_lst:
     filedir, filename = os.path.split(filepath)
 
     if filedir != "":
-        os.makedirs(filedir, exist_ok=True)
-        logging.info(f"Creating directory: {filedir} for the file '{filename}'")
+        if (not os.path.exists(filedir)):
+            os.makedirs(filedir, exist_ok=True)
+            logging.info(f"Creating directory: {filedir} for the file '{filename}'")
 
-    if (not os.path.exists(filepath)) or (os.path.getsize(filepath) == 0):
+    if (not os.path.exists(filepath)):
         with open(filepath, 'w') as f:
             logging.info(f"Creating file: {filepath}")
             pass
