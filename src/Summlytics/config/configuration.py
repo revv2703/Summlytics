@@ -1,6 +1,6 @@
 from Summlytics.constants import *
 from Summlytics.utils.common import read_yaml, create_directories
-from Summlytics.entity import DataIngestionConfig
+from Summlytics.entity import DataIngestionConfig, DataValidationConfig
 
 class ConfigurationManager:
     def __init__(self, config_filepath = CONFIG_FILE_PATH, params_filepath = PARAMS_FILE_PATH):
@@ -22,3 +22,15 @@ class ConfigurationManager:
             unzip_dir=config.unzip_dir 
         )
         return data_ingestion_config
+    
+    def get_data_validation_config(self) -> DataValidationConfig:
+
+        config = self.config.data_validation
+
+        create_directories([config.root_dir])
+        
+        return DataValidationConfig(
+            root_dir = config.root_dir,
+            FILE_STATUS = config.FILE_STATUS,
+            ALL_REQUIRED_FILES = config.ALL_REQUIRED_FILES
+        )

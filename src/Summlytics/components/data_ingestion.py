@@ -15,7 +15,7 @@ class DataIngestion:
         logger.info("Downloading data")
         if not os.path.exists(self.config.local_data_file):
             filename, headers = request.urlretrieve(self.config.source_url, self.config.local_data_file)
-            logger.info(f"{filename} downlaoded with the following information: \n{headers}")
+            logger.info(f"{filename} downloaded with the following information: \n{headers}")
         else:
             logger.info(f"Data file already exists at {self.config.local_data_file} of size: {get_size(Path(self.config.local_data_file))}")
 
