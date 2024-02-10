@@ -17,9 +17,9 @@ class DataTransformation:
             target_encodings = self.tokenizer(example_batch['summary'], truncation=True, max_length=128)
 
         return {
-            'input_ids': input_encodings.input_ids,
-            'attention_mask': input_encodings.attention_mask,
-            'target_ids': target_encodings.input_ids,
+            'input_ids' : input_encodings['input_ids'],
+            'attention_mask': input_encodings['attention_mask'],
+            'labels': target_encodings['input_ids']
         }
     
     def convert(self):

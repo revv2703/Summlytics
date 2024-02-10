@@ -1,6 +1,6 @@
 from Summlytics.constants import *
 from Summlytics.utils.common import read_yaml, create_directories
-from Summlytics.entity import DataIngestionConfig, DataTransformationConfig, DataValidationConfig
+from Summlytics.entity import DataIngestionConfig, DataTransformationConfig, DataValidationConfig, TrainModelConfig
 
 class ConfigurationManager:
     def __init__(self, config_filepath = CONFIG_FILE_PATH, params_filepath = PARAMS_FILE_PATH):
@@ -45,4 +45,26 @@ class ConfigurationManager:
             root_dir = config.root_dir,
             data_path = config.data_path,
             tokenizer_name = config.tokenizer_name
+        )
+    
+    def get_train_model_config(self) -> TrainModelConfig:
+
+        config = self.config.train_model
+        params = self.params.TrainingArgs
+
+        create_directories([config.root_dir])
+
+        return TrainModelConfig(
+            root_dir = config.root_dir,
+            data_path = config.data_path,
+            model_ckpt = config.model_ckpt,
+            num_train_epochs = params.num_train_epochs,
+            warmup_steps = params.warmup_steps,
+            per_device_train_batch_size = params.per_device_train_batch_size,
+            weight_decay = params.weight_decay,
+            logging_steps = params.logging_steps,
+            evaluation_strategy = params.evaluation_strategy,
+            eval_steps = params.eval_steps,
+            save_steps = params.save_steps,
+            gradient_accumulation_steps = params.gradient_accumulation_steps
         )
