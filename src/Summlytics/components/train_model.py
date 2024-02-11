@@ -26,8 +26,7 @@ class TrainModel:
             weight_decay=self.config.weight_decay,
             logging_steps=self.config.logging_steps,
             evaluation_strategy=self.config.evaluation_strategy,
-            # eval_steps=self.config.eval_steps,
-            eval_steps=500,
+            eval_steps=self.config.eval_steps,
             save_steps=int(float(self.config.save_steps)),  # workaround here
             gradient_accumulation_steps=self.config.gradient_accumulation_steps
         )
@@ -35,7 +34,7 @@ class TrainModel:
         trainer = Trainer(
             model=model,
             args=training_args,
-            train_dataset=dataset['test'],
+            train_dataset=dataset['train'],
             eval_dataset=dataset['validation'],
             tokenizer=tokenizer,
             data_collator=seq2seq_data_collator
